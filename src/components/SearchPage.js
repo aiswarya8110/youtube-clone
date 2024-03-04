@@ -9,8 +9,7 @@ const SearchPage = ()=>{
     const { searchTerm } = useParams();
     const dispatch = useDispatch();
     const videos = useSelector((store)=> store.video.videoSearchResults);
-    console.log("Search page renders");
-
+    const darkMode = useSelector((store)=> store.theme.darkMode);
     const getSearchResults = async()=>{
        const response = await fetch(`${YOUTUBE_SEARCH_VIDEOS_API}&q=${searchTerm}&maxResults=50&key=${GOOGLE_API_KEY}`);
        const data = await response.json();
@@ -25,8 +24,8 @@ const SearchPage = ()=>{
         getSearchResults();
     },[searchTerm]);
     return (
-        <div className='p-8'>
-            {videos.map((item)=> <VideoCardTwo videoInfo={item} />)}
+        <div className={`p-8 text-gray-700 ${darkMode && 'bg-black text-white transition-all'}`}>
+            {videos.map((item)=> <VideoCardTwo videoInfo={item} key={item.key} />)}
         </div>
     )
 }

@@ -11,6 +11,7 @@ import PopularVideos from './PopularVideos';
 const WatchPage = ()=>{
     const dispatch = useDispatch();
     const video = useSelector((store)=> store.video.currentlyPlayingVideo);
+    const darkMode = useSelector((store)=> store.theme.darkMode);
     const [ searchParams ] = useSearchParams();
     const videoId = searchParams.get("v");
     const { title, channelTitle, publishedAt, thumbnails } = video?.snippet || {};
@@ -18,7 +19,7 @@ const WatchPage = ()=>{
     const getSingleVideo = async()=>{
        const response = await fetch(`${YOUTUBE_SINGLE_VIDEO_API}${videoId}&key=${GOOGLE_API_KEY}`);
        const data = await response.json();
-       dispatch(addCurrentlyPlayingVideo(data.items[0]));
+       dispatch(addCurrentlyPlayingVideo(data?.items[0]));
     }
 
     useEffect(()=>{
@@ -30,7 +31,7 @@ const WatchPage = ()=>{
     },[videoId]);
 
     return (
-        <div className="flex flex-row col-span-11 px-5">
+        <div className={`pt-5 flex flex-row col-span-11 ${darkMode && 'bg-black text-white transition-all'}`}>
             <div className='px-5 flex flex-col w-[70%]'>
                 <iframe className='w-full h-[600px] rounded-3xl' src={`https://www.youtube.com/embed/${videoId}?si=UCAMibsOGn3rh90B`} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowFullScreen></iframe>
                 <h2 className='text-xl font-bold py-3'>{title}</h2>

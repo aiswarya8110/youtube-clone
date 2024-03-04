@@ -8,9 +8,9 @@ const Button = ({ name })=>{
     }
 
     return (
-        <div>
+        <div className='mb-5'>
             <button 
-            className="px-5 py-2 m-2 bg-gray-200 rounded-lg" onClick={handleClick}>
+            className="px-5 py-2 mr-2 bg-gray-200 rounded-lg" onClick={handleClick}>
                 {name}
             </button>
         </div>

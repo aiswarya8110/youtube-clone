@@ -6,6 +6,7 @@ import VideoCardTwo from './VideoCardTwo';
 const PopularVideos = ()=>{
     const dispatch = useDispatch();
     const popularVideos = useSelector((store)=> store.video.popularVideos);
+    const darkMode = useSelector((store)=> store.theme.darkMode);
     const getPopularVideos = async()=>{
         const response = await fetch(YOUTUBE_MOST_POPULAR_VIDEOS_API);
         const data = await response.json();
@@ -17,10 +18,10 @@ const PopularVideos = ()=>{
     },[])
 
     return (
-        <div>
+        <div className={`py-2 pl-4`}>
             <h3 className='pb-3 text-2xl font-semibold'>Popular Videos</h3>
             {
-                popularVideos.map((item)=><VideoCardTwo videoInfo={item} key={item.id} />)
+                popularVideos?.map((item)=><VideoCardTwo videoInfo={item} key={item.id} />)
             }
         </div>
     )

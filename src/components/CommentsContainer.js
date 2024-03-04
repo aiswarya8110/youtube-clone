@@ -11,9 +11,14 @@ const CommentsContainer = ()=>{
     const dispatch = useDispatch();
     const comments = useSelector((store)=> store.video.currentlyPlayingVideoComments);
     const getComments = async()=>{
-       const response = await fetch(YOUTUBE_COMMENTS_API+`${videoId}&key=${GOOGLE_API_KEY}`);
+       try{
+        const response = await fetch(YOUTUBE_COMMENTS_API+`${videoId}&key=${GOOGLE_API_KEY}`);
        const data = await response.json();
        dispatch(addCurrentlyPlayingVideoComments(data?.items));
+       }
+       catch(err){
+        console.log(err)
+       }
     }
 
     useEffect(()=>{

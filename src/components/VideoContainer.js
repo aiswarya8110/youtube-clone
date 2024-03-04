@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 const VideoContainer = ()=>{
     const [ videos, setVideos ] = useState([]);
     const videoCategory = useSelector((store)=> store.videoCategory.category);
+    const darkMode = useSelector((store)=> store.theme.darkMode);
     const VideoCardWithLive = videoCardWithLive(VideoCard);
     const getVideos = async()=>{
        try{
@@ -31,19 +32,19 @@ const VideoContainer = ()=>{
         getVideos();
     },[videoCategory]);
 
-    if(videos.length === 0){
+    if(videos?.length === 0){
         return <h2>Loading</h2>
     }
 
 
     return (
-        <div className="flex flex-wrap">
-            {videos.map((item, index)=>{
+        <div className="flex flex-wrap gap-4">
+            {videos?.map((item, index)=>{
                 if(item.isLive === "live"){
-                    return <VideoCardWithLive videoInfo={item} />
+                    return <VideoCardWithLive videoInfo={item} darkMode={darkMode} />
                 }
                 else
-                return <VideoCard key={`item.id${index}`} videoInfo={item} />
+                return <VideoCard key={`item.id${index}`} videoInfo={item} darkMode={darkMode} />
             })}
         </div>
     )
